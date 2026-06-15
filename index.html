@@ -5,65 +5,53 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Remodeling Budget: North Wall</title>
     <style>
-        /* Default theme = Bhakti Glow (gerua-apricot / terracotta) */
+        /* Default theme = Bhakti Glow (Gerua Apricot / Terracotta) */
         :root {
-            --primary: #b5613f;
-            --primary-dark: #7a3c28;
-            --bg-color: #fbf3ea;
+            --primary: #89553B;
+            --primary-dark: #5C3825;
+            --bg-color: #FCF3EA;
             --text-main: #333;
-            --text-muted: #8a6a58;
-            --border-color: #ecd9c8;
-            --row-alt: #fdf6ef;
-            --soft-bg: #f8ead9;
-            --total-row-bg: #f6e2d2;
-            --placeholder-bg: #f5e7d8;
-            --placeholder-border: #d9b89a;
-            --placeholder-text: #a37a5e;
-        }
-
-        [data-theme="sage"] {
-            --primary: #6c8c74;
-            --primary-dark: #4a6351;
-            --bg-color: #f4f7f5;
-            --text-main: #333;
-            --text-muted: #666;
-            --border-color: #e0e6e0;
-            --row-alt: #fdfdfd;
-            --soft-bg: #f9faf9;
-            --total-row-bg: #eef2ef;
-            --placeholder-bg: #f0f3f1;
-            --placeholder-border: #b5c4b9;
-            --placeholder-text: #7a8f80;
+            --text-muted: #8A6A58;
+            --border-color: #F0D6BE;
+            --row-alt: #FDF8F2;
+            --soft-bg: #F6E2CF;
+            --total-row-bg: #F0DCC8;
         }
 
         [data-theme="sandalwood"] {
-            --primary: #8f7858;
-            --primary-dark: #5c4c34;
-            --bg-color: #faf7f2;
+            --primary: #A88263;
+            --primary-dark: #6E5444;
+            --bg-color: #FAF6EF;
             --text-main: #333;
-            --text-muted: #7d7164;
-            --border-color: #ece4d6;
-            --row-alt: #fdfcf9;
-            --soft-bg: #f6f1e9;
-            --total-row-bg: #f0e8da;
-            --placeholder-bg: #f3ede2;
-            --placeholder-border: #cdbfa8;
-            --placeholder-text: #9c8a72;
+            --text-muted: #8A7A66;
+            --border-color: #E9DCC8;
+            --row-alt: #FCFAF6;
+            --soft-bg: #F1E7D7;
+            --total-row-bg: #EBE0CE;
         }
 
-        [data-theme="saffron"] {
-            --primary: #cc7a2e;
-            --primary-dark: #8a4a1f;
-            --bg-color: #fff8f0;
+        [data-theme="marigold"] {
+            --primary: #A76520;
+            --primary-dark: #6E4215;
+            --bg-color: #FEF6EA;
             --text-main: #333;
-            --text-muted: #8a6e54;
-            --border-color: #f3ddc4;
-            --row-alt: #fffbf5;
-            --soft-bg: #fef0dc;
-            --total-row-bg: #fbe6cf;
-            --placeholder-bg: #fcecd9;
-            --placeholder-border: #e8c39a;
-            --placeholder-text: #b27a45;
+            --text-muted: #8A6E45;
+            --border-color: #F6D9AE;
+            --row-alt: #FEFAF1;
+            --soft-bg: #FBE7C8;
+            --total-row-bg: #F5DDBE;
+        }
+
+        [data-theme="pistachio"] {
+            --primary: #78806D;
+            --primary-dark: #4D5341;
+            --bg-color: #F5F7F2;
+            --text-main: #333;
+            --text-muted: #6E7565;
+            --border-color: #DCE3D5;
+            --row-alt: #F9FBF7;
+            --soft-bg: #E7ECE0;
+            --total-row-bg: #DEE5D7;
         }
 
         body {
@@ -215,54 +203,31 @@
         }
 
         /* ============================================================
-           RENDER FIGURE (per-theme images)
+           RENDER — single sprite image, cropped per theme via CSS
+           Source: combined 2x2 sheet (2780x1480px), one quadrant per
+           theme. Only ONE image request for all four previews.
+           To self-host: download the URL below, place it next to this
+           file, and change the url(...) to its filename.
         ============================================================ */
         .render-figure {
             margin: 0 0 2.5rem 0;
         }
 
-        .image-slot[hidden] {
-            display: none;
-        }
-
-        .render-figure img {
+        .render-sprite {
             width: 100%;
-            height: auto;
-            display: block;
+            aspect-ratio: 1390 / 752;
             border-radius: 8px;
             box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+            background-image: url('https://raw.githubusercontent.com/anandvip/northwall/refs/heads/vipul/northwall.png');
+            background-repeat: no-repeat;
+            background-size: 200% 200%;
+            transition: background-position 0.5s ease;
         }
 
-        .image-placeholder {
-            width: 100%;
-            height: 350px;
-            box-sizing: border-box;
-            background-color: var(--placeholder-bg);
-            border: 2px dashed var(--placeholder-border);
-            border-radius: 8px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            color: var(--placeholder-text);
-            font-size: 1.2rem;
-            transition: all 0.2s ease-in-out;
-            cursor: pointer;
-        }
-
-        .image-placeholder:hover {
-            background-color: var(--soft-bg);
-            border-color: var(--primary);
-            color: var(--primary-dark);
-        }
-
-        .image-placeholder span {
-            font-size: 0.85rem;
-            margin-top: 0.5rem;
-            opacity: 0.8;
-            padding: 0 1rem;
-        }
+        [data-theme="bhakti"]     .render-sprite { background-position: 0%   0%; }
+        [data-theme="sandalwood"] .render-sprite { background-position: 100% 0%; }
+        [data-theme="marigold"]   .render-sprite { background-position: 0%   100%; }
+        [data-theme="pistachio"]  .render-sprite { background-position: 100% 100%; }
 
         .render-figure figcaption {
             text-align: center;
@@ -324,7 +289,7 @@
         .actual-input:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: 0 0 0 2px rgba(108, 140, 116, 0.2);
+            box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.08);
         }
 
         .total-row {
@@ -484,7 +449,7 @@
 
         <!-- ============================================================
              WALL FINISH THEME SWITCHER
-             Switching a theme changes: page colours, the render image
+             Switching a theme changes: page colours, the render crop
              below, and the Material Sourcing Specs at the bottom.
         ============================================================ -->
         <div class="theme-switcher">
@@ -495,42 +460,42 @@
             <div class="theme-options" role="group" aria-label="Choose a wall finish theme">
                 <button type="button" class="theme-option active" data-theme-option="bhakti" aria-pressed="true" onclick="setTheme('bhakti')">
                     <span class="swatch-pair" aria-hidden="true">
-                        <span style="background:#ecd3b8"></span>
-                        <span style="background:#b5613f"></span>
+                        <span style="background:#E7B48A"></span>
+                        <span style="background:#89553B"></span>
                     </span>
                     <span class="theme-option__text">
                         <span><span class="theme-option__check">✓ </span><strong>Bhakti Glow</strong></span>
                         <span class="theme-option__paint">Gerua Apricot / Terracotta</span>
                     </span>
                 </button>
-                <button type="button" class="theme-option" data-theme-option="sage" aria-pressed="false" onclick="setTheme('sage')">
-                    <span class="swatch-pair" aria-hidden="true">
-                        <span style="background:#6c8c74"></span>
-                        <span style="background:#c9a876"></span>
-                    </span>
-                    <span class="theme-option__text">
-                        <span><span class="theme-option__check">✓ </span><strong>Sage Stillness</strong></span>
-                        <span class="theme-option__paint">Sage Green / Natural Oak</span>
-                    </span>
-                </button>
                 <button type="button" class="theme-option" data-theme-option="sandalwood" aria-pressed="false" onclick="setTheme('sandalwood')">
                     <span class="swatch-pair" aria-hidden="true">
-                        <span style="background:#ece4d3"></span>
-                        <span style="background:#8f7858"></span>
+                        <span style="background:#E1D1BC"></span>
+                        <span style="background:#A88263"></span>
                     </span>
                     <span class="theme-option__text">
                         <span><span class="theme-option__check">✓ </span><strong>Sandalwood Calm</strong></span>
-                        <span class="theme-option__paint">Sandalwood Ivory / Walnut Brown</span>
+                        <span class="theme-option__paint">Sandalwood Ivory / Sandalwood Oak</span>
                     </span>
                 </button>
-                <button type="button" class="theme-option" data-theme-option="saffron" aria-pressed="false" onclick="setTheme('saffron')">
+                <button type="button" class="theme-option" data-theme-option="marigold" aria-pressed="false" onclick="setTheme('marigold')">
                     <span class="swatch-pair" aria-hidden="true">
-                        <span style="background:#fdeedc"></span>
-                        <span style="background:#cc7a2e"></span>
+                        <span style="background:#ECA545"></span>
+                        <span style="background:#A76520"></span>
                     </span>
                     <span class="theme-option__text">
-                        <span><span class="theme-option__check">✓ </span><strong>Saffron Dawn</strong></span>
-                        <span class="theme-option__paint">Saffron Cream / Marigold</span>
+                        <span><span class="theme-option__check">✓ </span><strong>Marigold Bloom</strong></span>
+                        <span class="theme-option__paint">Marigold Gold / Patinated Copper</span>
+                    </span>
+                </button>
+                <button type="button" class="theme-option" data-theme-option="pistachio" aria-pressed="false" onclick="setTheme('pistachio')">
+                    <span class="swatch-pair" aria-hidden="true">
+                        <span style="background:#B7BFAA"></span>
+                        <span style="background:#78806D"></span>
+                    </span>
+                    <span class="theme-option__text">
+                        <span><span class="theme-option__check">✓ </span><strong>Pistachio Sage</strong></span>
+                        <span class="theme-option__paint">Pistachio Sage / Dark Sage Green</span>
                     </span>
                 </button>
             </div>
@@ -543,52 +508,10 @@
         </div>
 
         <!-- ============================================================
-             RENDER FIGURE — one image slot per theme
-             For each theme, save a render next to this file using the
-             filename shown in its placeholder, then:
-               1. Delete that theme's <div class="image-placeholder">...</div>
-               2. Uncomment the <img> line just above it
-             Only the slot matching the active theme is shown; switching
-             themes swaps the image and the caption automatically.
+             RENDER — one image, cropped to the active theme's quadrant
         ============================================================ -->
         <figure class="render-figure">
-
-            <div class="image-slot" data-theme-image="bhakti">
-                <!-- <img src="north-wall-bhakti.jpg" alt="Desired north wall look — Bhakti Glow: gentle gerua-apricot upper wall over terracotta-textured dado, with a small Om display niche"> -->
-                <div class="image-placeholder"
-                     onclick="alert('Save your Bhakti Glow render as north-wall-bhakti.jpg next to this HTML file. Then delete this placeholder div and uncomment the <img> line above it in the code.');">
-                    <div>📸 Insert Bhakti Glow Render Here</div>
-                    <span>Save as north-wall-bhakti.jpg — click for instructions</span>
-                </div>
-            </div>
-
-            <div class="image-slot" data-theme-image="sage" hidden>
-                <!-- <img src="north-wall-sage.jpg" alt="Desired north wall look — Sage Stillness: sage green upper wall over natural oak dado"> -->
-                <div class="image-placeholder"
-                     onclick="alert('Save your Sage Stillness render as north-wall-sage.jpg next to this HTML file. Then delete this placeholder div and uncomment the <img> line above it in the code.');">
-                    <div>📸 Insert Sage Stillness Render Here</div>
-                    <span>Save as north-wall-sage.jpg — click for instructions</span>
-                </div>
-            </div>
-
-            <div class="image-slot" data-theme-image="sandalwood" hidden>
-                <!-- <img src="north-wall-sandalwood.jpg" alt="Desired north wall look — Sandalwood Calm: sandalwood ivory upper wall over walnut brown dado"> -->
-                <div class="image-placeholder"
-                     onclick="alert('Save your Sandalwood Calm render as north-wall-sandalwood.jpg next to this HTML file. Then delete this placeholder div and uncomment the <img> line above it in the code.');">
-                    <div>📸 Insert Sandalwood Calm Render Here</div>
-                    <span>Save as north-wall-sandalwood.jpg — click for instructions</span>
-                </div>
-            </div>
-
-            <div class="image-slot" data-theme-image="saffron" hidden>
-                <!-- <img src="north-wall-saffron.jpg" alt="Desired north wall look — Saffron Dawn: saffron cream upper wall over marigold-toned dado"> -->
-                <div class="image-placeholder"
-                     onclick="alert('Save your Saffron Dawn render as north-wall-saffron.jpg next to this HTML file. Then delete this placeholder div and uncomment the <img> line above it in the code.');">
-                    <div>📸 Insert Saffron Dawn Render Here</div>
-                    <span>Save as north-wall-saffron.jpg — click for instructions</span>
-                </div>
-            </div>
-
+            <div class="render-sprite" role="img" aria-label="Desired north wall look preview for the selected theme"></div>
             <figcaption id="renderCaption">Desired North Wall Look — Bhakti Glow</figcaption>
         </figure>
 
@@ -612,8 +535,8 @@
                     <td><span class="currency-symbol">₹</span><input type="number" class="actual-input" placeholder="0" oninput="calculateTotal()"></td>
                 </tr>
                 <tr>
-                    <td><strong>2. Lower Wall Tiling (Dado)</strong></td>
-                    <td>Wall cladding tile (~60 sq. ft.), adhesive, cement, mason labor — type &amp; size per selected theme (see Material Sourcing Specs below).</td>
+                    <td><strong>2. Lower Wall Cladding (Dado)</strong></td>
+                    <td>Wall cladding (~60 sq. ft.) — material varies by theme (ceramic tile, fluted panel, or metal sheet — see Material Sourcing Specs below), fixing/adhesive, and labor.</td>
                     <td>6,000</td>
                     <td>8,400</td>
                     <td><span class="currency-symbol">₹</span><input type="number" class="actual-input" placeholder="0" oninput="calculateTotal()"></td>
@@ -661,15 +584,15 @@
                 </tr>
             </tbody>
         </table>
-        <p class="table-note">Note: estimate ranges are unchanged across themes. Terracotta and marigold-toned tiles can run slightly higher than wood-finish tile — adjust Items 2 &amp; 3 once you've priced the selected theme's materials locally.</p>
+        <p class="table-note">Note: estimate ranges are unchanged across themes. Patinated copper sheet (Marigold Bloom) and fluted panel systems (Sandalwood Calm, Pistachio Sage) can price quite differently from ceramic tile (Bhakti Glow) — re-check Items 2 &amp; 4 once you've quoted the selected theme's materials locally.</p>
 
         <div class="tips-section">
             <h3>Implementation Tips for Kurukshetra</h3>
             <ul>
                 <li><strong>Shoora Defense:</strong> The high water table and humid crop seasons make shoora aggressive. Ensure the contractor uses a dedicated salt-retarding primer before waterproofing, rather than standard cement patching.</li>
-                <li><strong>Tile Sourcing:</strong> You can find excellent wholesale deals on wall tiles in the Pipli road hardware markets or by checking dealers bringing stock directly from Gujarat.</li>
-                <li><strong>Low Maintenance Reality:</strong> Because the bottom 4 feet (where hands, chairs, and dust hit most often) are tiled, your weekly cleaning will just require a quick wipe with a damp micro-fiber cloth.</li>
-                <li><strong>Spiritual Corner (Vastu Insight):</strong> Traditionally, the north-facing wall is associated with Kubera and a settled, communicative quality — a common reason it's chosen for a small altar niche or study corner. If <em>Item 5 (Right Niche Display)</em> is meant to hold a framed Om, a diya, or a small clock, consider an open-front or lightly-latticed door instead of solid glass, so light reaches what's displayed inside.</li>
+                <li><strong>Material Sourcing:</strong> You can find wholesale deals on tiles, fluted panels, and laminate sheets in the Pipli road hardware markets, or by checking dealers bringing stock directly from Gujarat and Morbi.</li>
+                <li><strong>Low Maintenance Reality:</strong> Whichever cladding you choose for the lower 4 feet (tile, fluted panel, or copper-finish sheet), it's the zone hands, chairs, and dust hit most — all three options wipe clean with a damp micro-fiber cloth.</li>
+                <li><strong>Spiritual Corner (Vastu Insight):</strong> Traditionally, the north-facing wall is associated with Kubera and a settled, communicative quality — a common reason it's chosen for a small altar niche or study corner. Every render here already places a framed Om, a diya, and a small clock in <em>Item 5 (Right Niche Display)</em> — consider an open-front or lightly-latticed door instead of solid glass, so light reaches them.</li>
             </ul>
         </div>
 
@@ -702,17 +625,17 @@
                             <span class="spec-hex" id="specLowerHex"></span>
                         </li>
                     </ul>
-                    <p class="spec-note">The lower tone is usually a tile or laminate finish rather than paint — the hex is given so trims, switchboard plates, and accessories can be colour-matched to it. Show either hex to a computerised tinting counter (Asian Paints, Berger, Nerolac, Dulux, Birla Opus and similar) for an exact match.</p>
+                    <p class="spec-note">The lower tone is realised as cladding (tile, panel, or sheet — see next card), not paint — its hex is given so trims, switchboard plates, and accessories can be colour-matched to it. Show either hex to a computerised tinting counter (Asian Paints, Berger, Nerolac, Dulux, Birla Opus and similar) for an exact match.</p>
                 </div>
 
                 <div class="spec-card">
-                    <h3>🧱 Dado / Lower Wall Tile</h3>
+                    <h3>🧱 Lower Wall Cladding (Item 2)</h3>
                     <ul>
                         <li><strong>Type:</strong> <span id="specTileType"></span></li>
                         <li><strong>Common sizes:</strong> <span id="specTileSize"></span></li>
                         <li><strong>Finish:</strong> <span id="specTileFinish"></span></li>
                     </ul>
-                    <p class="spec-note">Ask for these formats specifically — smaller tiles need more grout lines (more mason labor, Item 1/2), larger formats look more seamless but cost more per box.</p>
+                    <p class="spec-note" id="specTileNote"></p>
                 </div>
 
                 <div class="spec-card">
@@ -754,80 +677,84 @@
             bhakti: {
                 label: 'Bhakti Glow',
                 tagline: 'A devotional warmth: gentle gerua-apricot above, grounding terracotta below.',
-                upper: 'Gerua Apricot', upperHex: '#ECD3B8',
-                lower: 'Terracotta', lowerHex: '#B5613F',
+                upper: 'Gerua Apricot', upperHex: '#E7B48A',
+                lower: 'Terracotta', lowerHex: '#89553B',
                 tile: {
                     type: 'Terracotta-textured matte ceramic dado tile',
                     size: '300 × 450 mm or 300 × 600 mm (vertical lay)',
-                    finish: 'Matte / textured, terracotta-red body'
+                    finish: 'Matte / textured, terracotta-red body',
+                    note: 'Ask for these formats specifically — smaller tiles need more grout lines (more mason labor, Item 1/2), larger formats look more seamless but cost more per box.'
                 },
                 board: {
                     type: '19mm BWP-grade plywood (carcass) + 6mm back panel',
                     size: '2440 × 1220 mm (8 × 4 ft) standard sheet',
-                    laminate: 'Warm terracotta or rustic clay-tone laminate, 0.8–1mm'
+                    laminate: 'Terracotta / rustic clay-tone laminate, 0.8–1mm'
                 },
                 glass: {
-                    type: 'Clear toughened glass; open or lightly-latticed front for a Bhakti display corner',
+                    type: 'Clear toughened glass; open or lightly-latticed front for the Bhakti display corner',
                     thickness: '5mm shelves, 6mm front shutter if enclosed'
                 }
             },
-            sage: {
-                label: 'Sage Stillness',
-                tagline: 'A meditative calm: sage green above, natural oak below.',
-                upper: 'Sage Green', upperHex: '#6C8C74',
-                lower: 'Natural Oak', lowerHex: '#C9A876',
+            sandalwood: {
+                label: 'Sandalwood Calm',
+                tagline: 'Quiet and grounded: sandalwood ivory above, finely fluted sandalwood-oak below.',
+                upper: 'Sandalwood Ivory', upperHex: '#E1D1BC',
+                lower: 'Sandalwood Oak', lowerHex: '#A88263',
                 tile: {
-                    type: 'Wood-finish (plank-style) ceramic or vitrified tile',
-                    size: '200 × 1200 mm or 150 × 900 mm planks',
-                    finish: 'Matte wood-grain, oak tone'
+                    type: 'Fluted wood-finish wall panel (PVC/WPC or veneer, vertical grooves)',
+                    size: '1220 mm wide × 2440–2900 mm tall sheets, or individual fluted planks ~150–200 mm wide',
+                    finish: 'Sandalwood-oak woodgrain, ribbed/fluted texture',
+                    note: "This is a panel system, not tile — confirm the carpenter's groove spacing matches the reference render, and ask about matching corner/edge trims."
                 },
                 board: {
                     type: '19mm BWP-grade plywood (carcass) + 6mm back panel',
                     size: '2440 × 1220 mm (8 × 4 ft) standard sheet',
-                    laminate: 'Natural oak / light walnut woodgrain laminate, 0.8–1mm'
+                    laminate: 'Sandalwood-oak woodgrain laminate, 0.8–1mm'
                 },
                 glass: {
                     type: 'Clear toughened glass, sliding or hinged front',
                     thickness: '5mm shelves, 6mm front shutter'
                 }
             },
-            sandalwood: {
-                label: 'Sandalwood Calm',
-                tagline: 'Quiet and grounded: sandalwood ivory above, walnut brown below.',
-                upper: 'Sandalwood Ivory', upperHex: '#ECE4D3',
-                lower: 'Walnut Brown', lowerHex: '#8F7858',
+            marigold: {
+                label: 'Marigold Bloom',
+                tagline: 'Bright and auspicious: rich marigold gold above, patinated copper below.',
+                upper: 'Marigold Gold', upperHex: '#ECA545',
+                lower: 'Patinated Copper', lowerHex: '#A76520',
                 tile: {
-                    type: 'Large-format matte ivory/cream tile',
-                    size: '600 × 600 mm or 300 × 600 mm',
-                    finish: 'Matte, low-sheen ivory'
+                    type: 'Patinated copper-finish metal cladding sheet (or copper-laminate panel)',
+                    size: '1220 × 2440 mm (4 × 8 ft) sheets, or copper-effect tile units ~150 × 150 mm',
+                    finish: 'Bronze-amber patina, semi-matte',
+                    note: 'Metal cladding is priced and fixed differently from tile (adhesive vs. screw-fix battens) — get a separate quote from a metal fabricator alongside your tile contractor before finalising Item 2.'
                 },
                 board: {
                     type: '19mm BWP-grade plywood (carcass) + 6mm back panel',
                     size: '2440 × 1220 mm (8 × 4 ft) standard sheet',
-                    laminate: 'Walnut brown woodgrain laminate, 0.8–1mm'
-                },
-                glass: {
-                    type: 'Frosted or clear toughened glass',
-                    thickness: '5mm shelves, 6mm front shutter'
-                }
-            },
-            saffron: {
-                label: 'Saffron Dawn',
-                tagline: 'Bright and auspicious: saffron cream above, marigold below.',
-                upper: 'Saffron Cream', upperHex: '#FDEEDC',
-                lower: 'Marigold', lowerHex: '#CC7A2E',
-                tile: {
-                    type: 'Matte mustard / marigold-toned ceramic tile',
-                    size: '300 × 300 mm or 200 × 300 mm',
-                    finish: 'Matte, warm mustard-orange'
-                },
-                board: {
-                    type: '19mm BWP-grade plywood (carcass) + 6mm back panel',
-                    size: '2440 × 1220 mm (8 × 4 ft) standard sheet',
-                    laminate: 'Warm amber or honey-tone laminate, 0.8–1mm'
+                    laminate: 'Warm bronze / antique-copper-tone laminate, 0.8–1mm'
                 },
                 glass: {
                     type: 'Amber-tinted or clear toughened glass',
+                    thickness: '5mm shelves, 6mm front shutter'
+                }
+            },
+            pistachio: {
+                label: 'Pistachio Sage',
+                tagline: 'Cool and contemplative: pistachio sage above, dark sage green fluted paneling below.',
+                upper: 'Pistachio Sage', upperHex: '#B7BFAA',
+                lower: 'Dark Sage Green', lowerHex: '#78806D',
+                tile: {
+                    type: 'Fluted wall panel (PVC/WPC, vertical grooves)',
+                    size: '1220 mm wide × 2440–2900 mm tall sheets, or individual fluted planks ~150–200 mm wide',
+                    finish: 'Dark sage green, ribbed/fluted matte',
+                    note: 'Same panel system as Sandalwood Calm, in a darker green — ask the same supplier whether this tone is in stock or needs a custom-tinted run.'
+                },
+                board: {
+                    type: '19mm BWP-grade plywood (carcass) + 6mm back panel',
+                    size: '2440 × 1220 mm (8 × 4 ft) standard sheet',
+                    laminate: 'Dark sage green laminate, 0.8–1mm'
+                },
+                glass: {
+                    type: 'Frosted or clear toughened glass',
                     thickness: '5mm shelves, 6mm front shutter'
                 }
             }
@@ -849,12 +776,9 @@
             // Tagline
             document.getElementById('themeTagline').innerHTML =
                 info.tagline + ' Ask your paint shop for <strong>' + info.upper +
-                '</strong> (upper wall) and <strong>' + info.lower + '</strong> (lower wall / panelling) shade families.';
+                '</strong> (upper wall) and <strong>' + info.lower + '</strong> (lower wall / cladding) shade families.';
 
-            // Render image slot + caption
-            document.querySelectorAll('.image-slot').forEach(function (slot) {
-                slot.hidden = slot.getAttribute('data-theme-image') !== theme;
-            });
+            // Render caption (image itself swaps via CSS background-position)
             document.getElementById('renderCaption').textContent = 'Desired North Wall Look — ' + info.label;
 
             // Material Sourcing Specs
@@ -871,6 +795,7 @@
             document.getElementById('specTileType').textContent = info.tile.type;
             document.getElementById('specTileSize').textContent = info.tile.size;
             document.getElementById('specTileFinish').textContent = info.tile.finish;
+            document.getElementById('specTileNote').textContent = info.tile.note;
 
             document.getElementById('specBoardType').textContent = info.board.type;
             document.getElementById('specBoardSize').textContent = info.board.size;
