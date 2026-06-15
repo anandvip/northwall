@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="bhakti">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remodeling Budget: North Wall</title>
+    <style>
+        /* Default theme = Bhakti Glow (gerua-apricot / terracotta) */
+        :root {
+            --primary: #b5613f;
+            --primary-dark: #7a3c28;
+            --bg-color: #fbf3ea;
+            --text-main: #333;
+            --text-muted: #8a6a58;
+            --border-color: #ecd9c8;
+            --row-alt: #fdf6ef;
+            --soft-bg: #f8ead9;
+            --total-row-bg: #f6e2d2;
+            --placeholder-bg: #f5e7d8;
+            --placeholder-border: #d9b89a;
+            --placeholder-text: #a37a5e;
+        }
+
+        [data-theme="sage"] {
+            --primary: #6c8c74;
+            --primary-dark: #4a6351;
+            --bg-color: #f4f7f5;
+            --text-main: #333;
+            --text-muted: #666;
+            --border-color: #e0e6e0;
+            --row-alt: #fdfdfd;
+            --soft-bg: #f9faf9;
+            --total-row-bg: #eef2ef;
+            --placeholder-bg: #f0f3f1;
+            --placeholder-border: #b5c4b9;
+            --placeholder-text: #7a8f80;
+        }
+
+        [data-theme="sandalwood"] {
+            --primary: #8f7858;
+            --primary-dark: #5c4c34;
+            --bg-color: #faf7f2;
+            --text-main: #333;
+            --text-muted: #7d7164;
+            --border-color: #ece4d6;
+            --row-alt: #fdfcf9;
+            --soft-bg: #f6f1e9;
+            --total-row-bg: #f0e8da;
+            --placeholder-bg: #f3ede2;
+            --placeholder-border: #cdbfa8;
+            --placeholder-text: #9c8a72;
+        }
+
+        [data-theme="saffron"] {
+            --primary: #cc7a2e;
+            --primary-dark: #8a4a1f;
+            --bg-color: #fff8f0;
+            --text-main: #333;
+            --text-muted: #8a6e54;
+            --border-color: #f3ddc4;
+            --row-alt: #fffbf5;
+            --soft-bg: #fef0dc;
+            --total-row-bg: #fbe6cf;
+            --placeholder-bg: #fcecd9;
+            --placeholder-border: #e8c39a;
+            --placeholder-text: #b27a45;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            margin: 0;
+            padding: 2rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 2.5rem 3rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+        }
+
+        h1 {
+            color: var(--primary-dark);
+            border-bottom: 3px solid var(--border-color);
+            padding-bottom: 0.8rem;
+            margin-top: 0;
+            font-size: 2.2rem;
+            transition: color 0.3s ease, border-color 0.3s ease;
+        }
+
+        h2 {
+            color: var(--primary-dark);
+            margin-bottom: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        /* ============================================================
+           THEME SWITCHER
+        ============================================================ */
+        .theme-switcher {
+            margin-bottom: 2rem;
+        }
+
+        .theme-switcher__label {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin: 0 0 0.8rem 0;
+            display: flex;
+            align-items: center;
+            transition: color 0.3s ease;
+        }
+
+        .om-mark {
+            color: var(--primary-dark);
+            font-size: 1.3rem;
+            margin-right: 0.45rem;
+            opacity: 0.85;
+            line-height: 1;
+            transition: color 0.3s ease;
+        }
+
+        .theme-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .theme-option {
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
+            padding: 0.6rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 999px;
+            background: #fff;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.9rem;
+            color: var(--text-main);
+            text-align: left;
+            transition: border-color 0.2s, background-color 0.2s;
+        }
+
+        .theme-option:hover {
+            border-color: var(--primary);
+        }
+
+        .theme-option:focus-visible {
+            outline: 2px solid var(--primary-dark);
+            outline-offset: 2px;
+        }
+
+        .theme-option.active {
+            border-color: var(--primary-dark);
+            background: var(--soft-bg);
+        }
+
+        .swatch-pair {
+            display: flex;
+            flex-direction: column;
+            width: 22px;
+            height: 22px;
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: inset 0 0 0 1px rgba(0,0,0,0.1);
+            flex-shrink: 0;
+        }
+
+        .swatch-pair span {
+            flex: 1;
+        }
+
+        .theme-option__text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.35;
+        }
+
+        .theme-option__check {
+            display: none;
+            color: var(--primary-dark);
+        }
+
+        .theme-option.active .theme-option__check {
+            display: inline;
+        }
+
+        .theme-option__paint {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+        }
+
+        .theme-tagline {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin: 0.9rem 0 0 0;
+            transition: color 0.3s ease;
+        }
+
+        .meta-info {
+            font-size: 1rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            background: var(--soft-bg);
+            padding: 1rem 1.5rem;
+            border-radius: 6px;
+            border-left: 4px solid var(--primary);
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        /* ============================================================
+           RENDER FIGURE (per-theme images)
+        ============================================================ */
+        .render-figure {
+            margin: 0 0 2.5rem 0;
+        }
+
+        .image-slot[hidden] {
+            display: none;
+        }
+
+        .render-figure img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 8px;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+        }
+
+        .image-placeholder {
+            width: 100%;
+            height: 350px;
+            box-sizing: border-box;
+            background-color: var(--placeholder-bg);
+            border: 2px dashed var(--placeholder-border);
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--placeholder-text);
+            font-size: 1.2rem;
+            transition: all 0.2s ease-in-out;
+            cursor: pointer;
+        }
+
+        .image-placeholder:hover {
+            background-color: var(--soft-bg);
+            border-color: var(--primary);
+            color: var(--primary-dark);
+        }
+
+        .image-placeholder span {
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+            opacity: 0.8;
+            padding: 0 1rem;
+        }
+
+        .render-figure figcaption {
+            text-align: center;
+            font-size: 0.95rem;
+            font-style: italic;
+            color: var(--text-muted);
+            margin-top: 0.9rem;
+            letter-spacing: 0.3px;
+            transition: color 0.3s ease;
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        th, td {
+            padding: 14px 16px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+            transition: border-color 0.3s ease;
+        }
+
+        th {
+            background-color: var(--primary);
+            color: white;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+            transition: background-color 0.3s ease;
+        }
+
+        tr:nth-child(even) {
+            background-color: var(--row-alt);
+            transition: background-color 0.3s ease;
+        }
+
+        td:nth-child(3), td:nth-child(4) {
+            color: var(--text-muted);
+            transition: color 0.3s ease;
+        }
+
+        /* Input Styling for Actuals */
+        .actual-input {
+            width: 120px;
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            text-align: right;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+
+        .actual-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(108, 140, 116, 0.2);
+        }
+
+        .total-row {
+            font-weight: bold;
+            background-color: var(--total-row-bg) !important;
+            font-size: 1.1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .total-row td {
+            border-bottom: none;
+            border-top: 2px solid var(--primary);
+            transition: border-color 0.3s ease;
+        }
+
+        .currency-symbol {
+            color: #888;
+            margin-right: 4px;
+        }
+
+        #actualTotal {
+            color: var(--primary-dark);
+            transition: color 0.3s ease;
+        }
+
+        .table-note {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin: 0 0 2.5rem 0;
+            transition: color 0.3s ease;
+        }
+
+        /* Tips Section */
+        .tips-section {
+            background-color: var(--soft-bg);
+            padding: 1.8rem;
+            border-left: 4px solid var(--primary);
+            border-radius: 6px;
+            margin-bottom: 2.5rem;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        .tips-section h3 {
+            margin-top: 0;
+            color: var(--primary-dark);
+            margin-bottom: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .tips-section ul {
+            margin: 0;
+            padding-left: 1.2rem;
+            color: var(--text-muted);
+        }
+
+        .tips-section li {
+            margin-bottom: 0.8rem;
+        }
+
+        .tips-section li:last-child {
+            margin-bottom: 0;
+        }
+
+        /* ============================================================
+           MATERIAL SOURCING SPECS
+        ============================================================ */
+        .specs-section {
+            margin-top: 1rem;
+            border-top: 3px solid var(--border-color);
+            padding-top: 2rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .specs-intro {
+            color: var(--text-muted);
+            margin: 0 0 1.5rem 0;
+            transition: color 0.3s ease;
+        }
+
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.25rem;
+        }
+
+        .spec-card {
+            background: var(--soft-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.25rem 1.5rem;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        .spec-card h3 {
+            margin: 0 0 0.8rem 0;
+            color: var(--primary-dark);
+            font-size: 1.05rem;
+            transition: color 0.3s ease;
+        }
+
+        .spec-card ul {
+            margin: 0 0 0.8rem 0;
+            padding-left: 1.1rem;
+            color: var(--text-main);
+        }
+
+        .spec-card li {
+            margin-bottom: 0.5rem;
+        }
+
+        .spec-note {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            margin: 0;
+            transition: color 0.3s ease;
+        }
+
+        .spec-swatch {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            border-radius: 3px;
+            margin-right: 5px;
+            vertical-align: middle;
+            box-shadow: inset 0 0 0 1px rgba(0,0,0,0.15);
+        }
+
+        .spec-hex {
+            font-family: 'Courier New', Courier, monospace;
+            background: #fff;
+            padding: 1px 6px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            border: 1px solid var(--border-color);
+            transition: border-color 0.3s ease;
+        }
+
+        /* Print Styles */
+        @media print {
+            body { background: white; padding: 0; }
+            .container { box-shadow: none; padding: 0; max-width: 100%; }
+            .actual-input { border: none; border-bottom: 1px dashed #999; border-radius: 0; background: transparent; }
+            .theme-switcher, .theme-tagline { display: none; }
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 1.5rem; }
+            table { display: block; overflow-x: auto; white-space: nowrap; }
+            .actual-input { width: 90px; }
+            .specs-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Living Room North Wall Remodeling Planner</h1>
+
+        <!-- ============================================================
+             WALL FINISH THEME SWITCHER
+             Switching a theme changes: page colours, the render image
+             below, and the Material Sourcing Specs at the bottom.
+        ============================================================ -->
+        <div class="theme-switcher">
+            <p class="theme-switcher__label">
+                <span class="om-mark" aria-hidden="true">ॐ</span>
+                Wall Finish Theme — tap to preview
+            </p>
+            <div class="theme-options" role="group" aria-label="Choose a wall finish theme">
+                <button type="button" class="theme-option active" data-theme-option="bhakti" aria-pressed="true" onclick="setTheme('bhakti')">
+                    <span class="swatch-pair" aria-hidden="true">
+                        <span style="background:#ecd3b8"></span>
+                        <span style="background:#b5613f"></span>
+                    </span>
+                    <span class="theme-option__text">
+                        <span><span class="theme-option__check">✓ </span><strong>Bhakti Glow</strong></span>
+                        <span class="theme-option__paint">Gerua Apricot / Terracotta</span>
+                    </span>
+                </button>
+                <button type="button" class="theme-option" data-theme-option="sage" aria-pressed="false" onclick="setTheme('sage')">
+                    <span class="swatch-pair" aria-hidden="true">
+                        <span style="background:#6c8c74"></span>
+                        <span style="background:#c9a876"></span>
+                    </span>
+                    <span class="theme-option__text">
+                        <span><span class="theme-option__check">✓ </span><strong>Sage Stillness</strong></span>
+                        <span class="theme-option__paint">Sage Green / Natural Oak</span>
+                    </span>
+                </button>
+                <button type="button" class="theme-option" data-theme-option="sandalwood" aria-pressed="false" onclick="setTheme('sandalwood')">
+                    <span class="swatch-pair" aria-hidden="true">
+                        <span style="background:#ece4d3"></span>
+                        <span style="background:#8f7858"></span>
+                    </span>
+                    <span class="theme-option__text">
+                        <span><span class="theme-option__check">✓ </span><strong>Sandalwood Calm</strong></span>
+                        <span class="theme-option__paint">Sandalwood Ivory / Walnut Brown</span>
+                    </span>
+                </button>
+                <button type="button" class="theme-option" data-theme-option="saffron" aria-pressed="false" onclick="setTheme('saffron')">
+                    <span class="swatch-pair" aria-hidden="true">
+                        <span style="background:#fdeedc"></span>
+                        <span style="background:#cc7a2e"></span>
+                    </span>
+                    <span class="theme-option__text">
+                        <span><span class="theme-option__check">✓ </span><strong>Saffron Dawn</strong></span>
+                        <span class="theme-option__paint">Saffron Cream / Marigold</span>
+                    </span>
+                </button>
+            </div>
+            <p class="theme-tagline" id="themeTagline"></p>
+        </div>
+
+        <div class="meta-info">
+            <strong>Location:</strong> Kurukshetra, Haryana<br>
+            <strong>Scope:</strong> ~150 sq. ft. (Shoora treatment, dual-tone tile/paint finish, storage enclosures, switchboard upgrade)
+        </div>
+
+        <!-- ============================================================
+             RENDER FIGURE — one image slot per theme
+             For each theme, save a render next to this file using the
+             filename shown in its placeholder, then:
+               1. Delete that theme's <div class="image-placeholder">...</div>
+               2. Uncomment the <img> line just above it
+             Only the slot matching the active theme is shown; switching
+             themes swaps the image and the caption automatically.
+        ============================================================ -->
+        <figure class="render-figure">
+
+            <div class="image-slot" data-theme-image="bhakti">
+                <!-- <img src="north-wall-bhakti.jpg" alt="Desired north wall look — Bhakti Glow: gentle gerua-apricot upper wall over terracotta-textured dado, with a small Om display niche"> -->
+                <div class="image-placeholder"
+                     onclick="alert('Save your Bhakti Glow render as north-wall-bhakti.jpg next to this HTML file. Then delete this placeholder div and uncomment the <img> line above it in the code.');">
+                    <div>📸 Insert Bhakti Glow Render Here</div>
+                    <span>Save as north-wall-bhakti.jpg — click for instructions</span>
+                </div>
+            </div>
+
+            <div class="image-slot" data-theme-image="sage" hidden>
+                <!-- <img src="north-wall-sage.jpg" alt="Desired north wall look — Sage Stillness: sage green upper wall over natural oak dado"> -->
+                <div class="image-placeholder"
+                     onclick="alert('Save your Sage Stillness render as north-wall-sage.jpg next to this HTML file. Then delete this placeholder div and uncomment the <img> line above it in the code.');">
+                    <div>📸 Insert Sage Stillness Render Here</div>
+                    <span>Save as north-wall-sage.jpg — click for instructions</span>
+                </div>
+            </div>
+
+            <div class="image-slot" data-theme-image="sandalwood" hidden>
+                <!-- <img src="north-wall-sandalwood.jpg" alt="Desired north wall look — Sandalwood Calm: sandalwood ivory upper wall over walnut brown dado"> -->
+                <div class="image-placeholder"
+                     onclick="alert('Save your Sandalwood Calm render as north-wall-sandalwood.jpg next to this HTML file. Then delete this placeholder div and uncomment the <img> line above it in the code.');">
+                    <div>📸 Insert Sandalwood Calm Render Here</div>
+                    <span>Save as north-wall-sandalwood.jpg — click for instructions</span>
+                </div>
+            </div>
+
+            <div class="image-slot" data-theme-image="saffron" hidden>
+                <!-- <img src="north-wall-saffron.jpg" alt="Desired north wall look — Saffron Dawn: saffron cream upper wall over marigold-toned dado"> -->
+                <div class="image-placeholder"
+                     onclick="alert('Save your Saffron Dawn render as north-wall-saffron.jpg next to this HTML file. Then delete this placeholder div and uncomment the <img> line above it in the code.');">
+                    <div>📸 Insert Saffron Dawn Render Here</div>
+                    <span>Save as north-wall-saffron.jpg — click for instructions</span>
+                </div>
+            </div>
+
+            <figcaption id="renderCaption">Desired North Wall Look — Bhakti Glow</figcaption>
+        </figure>
+
+        <h2>Budget Tracker: Estimate vs. Actual</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Remodeling Component</th>
+                    <th>Specification &amp; Materials</th>
+                    <th>Est. Min (₹)</th>
+                    <th>Est. Max (₹)</th>
+                    <th>Actual Cost (₹)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>1. Shoora Treatment</strong></td>
+                    <td>Scraping to brick, anti-efflorescence treatment, polymer waterproofing.</td>
+                    <td>9,000</td>
+                    <td>14,000</td>
+                    <td><span class="currency-symbol">₹</span><input type="number" class="actual-input" placeholder="0" oninput="calculateTotal()"></td>
+                </tr>
+                <tr>
+                    <td><strong>2. Lower Wall Tiling (Dado)</strong></td>
+                    <td>Wall cladding tile (~60 sq. ft.), adhesive, cement, mason labor — type &amp; size per selected theme (see Material Sourcing Specs below).</td>
+                    <td>6,000</td>
+                    <td>8,400</td>
+                    <td><span class="currency-symbol">₹</span><input type="number" class="actual-input" placeholder="0" oninput="calculateTotal()"></td>
+                </tr>
+                <tr>
+                    <td><strong>3. Upper Wall Painting</strong></td>
+                    <td>Washable paint, putty, primer, two topcoats (~90 sq. ft.) — exact shade &amp; hex per selected theme (see Material Sourcing Specs below).</td>
+                    <td>2,000</td>
+                    <td>3,000</td>
+                    <td><span class="currency-symbol">₹</span><input type="number" class="actual-input" placeholder="0" oninput="calculateTotal()"></td>
+                </tr>
+                <tr>
+                    <td><strong>4. Left Niche Enclosure</strong></td>
+                    <td>Plywood framework, laminate finish (sheet size &amp; tone per theme — see specs below), flush handles, labor.</td>
+                    <td>7,000</td>
+                    <td>10,000</td>
+                    <td><span class="currency-symbol">₹</span><input type="number" class="actual-input" placeholder="0" oninput="calculateTotal()"></td>
+                </tr>
+                <tr>
+                    <td><strong>5. Right Niche Display</strong></td>
+                    <td>2 toughened glass shelves (size/tint per theme — see specs below), edge polishing, glass front.</td>
+                    <td>3,000</td>
+                    <td>5,000</td>
+                    <td><span class="currency-symbol">₹</span><input type="number" class="actual-input" placeholder="0" oninput="calculateTotal()"></td>
+                </tr>
+                <tr>
+                    <td><strong>6. Switchboard Upgrade</strong></td>
+                    <td>Modern modular switchboard, 4-6 switches, sockets, electrician.</td>
+                    <td>800</td>
+                    <td>1,500</td>
+                    <td><span class="currency-symbol">₹</span><input type="number" class="actual-input" placeholder="0" oninput="calculateTotal()"></td>
+                </tr>
+                <tr>
+                    <td><strong>7. Debris Removal / Buffer</strong></td>
+                    <td>Local transport for debris, minor unforeseen masonry repairs.</td>
+                    <td>1,500</td>
+                    <td>2,500</td>
+                    <td><span class="currency-symbol">₹</span><input type="number" class="actual-input" placeholder="0" oninput="calculateTotal()"></td>
+                </tr>
+                <tr class="total-row">
+                    <td colspan="2" style="text-align: right;"><strong>Estimated Grand Total:</strong></td>
+                    <td>₹29,300</td>
+                    <td>₹44,400</td>
+                    <td><strong>₹ <span id="actualTotal">0</span></strong></td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="table-note">Note: estimate ranges are unchanged across themes. Terracotta and marigold-toned tiles can run slightly higher than wood-finish tile — adjust Items 2 &amp; 3 once you've priced the selected theme's materials locally.</p>
+
+        <div class="tips-section">
+            <h3>Implementation Tips for Kurukshetra</h3>
+            <ul>
+                <li><strong>Shoora Defense:</strong> The high water table and humid crop seasons make shoora aggressive. Ensure the contractor uses a dedicated salt-retarding primer before waterproofing, rather than standard cement patching.</li>
+                <li><strong>Tile Sourcing:</strong> You can find excellent wholesale deals on wall tiles in the Pipli road hardware markets or by checking dealers bringing stock directly from Gujarat.</li>
+                <li><strong>Low Maintenance Reality:</strong> Because the bottom 4 feet (where hands, chairs, and dust hit most often) are tiled, your weekly cleaning will just require a quick wipe with a damp micro-fiber cloth.</li>
+                <li><strong>Spiritual Corner (Vastu Insight):</strong> Traditionally, the north-facing wall is associated with Kubera and a settled, communicative quality — a common reason it's chosen for a small altar niche or study corner. If <em>Item 5 (Right Niche Display)</em> is meant to hold a framed Om, a diya, or a small clock, consider an open-front or lightly-latticed door instead of solid glass, so light reaches what's displayed inside.</li>
+            </ul>
+        </div>
+
+        <!-- ============================================================
+             MATERIAL SOURCING SPECS — updates with the selected theme
+        ============================================================ -->
+        <div class="specs-section">
+            <h2>Material Sourcing Specs — <span id="specsThemeLabel">Bhakti Glow</span></h2>
+            <p class="specs-intro">
+                Take this card to the hardware store or paint counter for the look above.
+                Hex codes let any tinting machine match the exact shade; sizes are the
+                standard formats to ask for. Treat sizes as common formats — confirm
+                what your local supplier actually stocks before ordering.
+            </p>
+
+            <div class="specs-grid">
+                <div class="spec-card">
+                    <h3>🎨 Colour Palette</h3>
+                    <ul>
+                        <li>
+                            <strong>Upper wall:</strong>
+                            <span class="spec-swatch" id="specUpperSwatch"></span>
+                            <span id="specUpperName"></span> —
+                            <span class="spec-hex" id="specUpperHex"></span>
+                        </li>
+                        <li>
+                            <strong>Lower wall / accent tone:</strong>
+                            <span class="spec-swatch" id="specLowerSwatch"></span>
+                            <span id="specLowerName"></span> —
+                            <span class="spec-hex" id="specLowerHex"></span>
+                        </li>
+                    </ul>
+                    <p class="spec-note">The lower tone is usually a tile or laminate finish rather than paint — the hex is given so trims, switchboard plates, and accessories can be colour-matched to it. Show either hex to a computerised tinting counter (Asian Paints, Berger, Nerolac, Dulux, Birla Opus and similar) for an exact match.</p>
+                </div>
+
+                <div class="spec-card">
+                    <h3>🧱 Dado / Lower Wall Tile</h3>
+                    <ul>
+                        <li><strong>Type:</strong> <span id="specTileType"></span></li>
+                        <li><strong>Common sizes:</strong> <span id="specTileSize"></span></li>
+                        <li><strong>Finish:</strong> <span id="specTileFinish"></span></li>
+                    </ul>
+                    <p class="spec-note">Ask for these formats specifically — smaller tiles need more grout lines (more mason labor, Item 1/2), larger formats look more seamless but cost more per box.</p>
+                </div>
+
+                <div class="spec-card">
+                    <h3>🪵 Niche Board &amp; Laminate (Item 4)</h3>
+                    <ul>
+                        <li><strong>Board:</strong> <span id="specBoardType"></span></li>
+                        <li><strong>Standard sheet size:</strong> <span id="specBoardSize"></span></li>
+                        <li><strong>Laminate tone:</strong> <span id="specLaminate"></span></li>
+                    </ul>
+                    <p class="spec-note">Sheet sizes are the same across themes — what changes is the laminate colour/finish you ask the carpenter to apply.</p>
+                </div>
+
+                <div class="spec-card">
+                    <h3>🪟 Niche Glass (Item 5)</h3>
+                    <ul>
+                        <li><strong>Type:</strong> <span id="specGlassType"></span></li>
+                        <li><strong>Thickness:</strong> <span id="specGlassThickness"></span></li>
+                    </ul>
+                    <p class="spec-note">Toughened glass is non-negotiable for shelves at this height — confirm the supplier provides an ISI-certified toughening certificate.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function calculateTotal() {
+            let inputs = document.querySelectorAll('.actual-input');
+            let total = 0;
+            inputs.forEach(input => {
+                let val = parseFloat(input.value);
+                if (!isNaN(val)) {
+                    total += val;
+                }
+            });
+            document.getElementById('actualTotal').innerText = total.toLocaleString('en-IN');
+        }
+
+        const THEME_INFO = {
+            bhakti: {
+                label: 'Bhakti Glow',
+                tagline: 'A devotional warmth: gentle gerua-apricot above, grounding terracotta below.',
+                upper: 'Gerua Apricot', upperHex: '#ECD3B8',
+                lower: 'Terracotta', lowerHex: '#B5613F',
+                tile: {
+                    type: 'Terracotta-textured matte ceramic dado tile',
+                    size: '300 × 450 mm or 300 × 600 mm (vertical lay)',
+                    finish: 'Matte / textured, terracotta-red body'
+                },
+                board: {
+                    type: '19mm BWP-grade plywood (carcass) + 6mm back panel',
+                    size: '2440 × 1220 mm (8 × 4 ft) standard sheet',
+                    laminate: 'Warm terracotta or rustic clay-tone laminate, 0.8–1mm'
+                },
+                glass: {
+                    type: 'Clear toughened glass; open or lightly-latticed front for a Bhakti display corner',
+                    thickness: '5mm shelves, 6mm front shutter if enclosed'
+                }
+            },
+            sage: {
+                label: 'Sage Stillness',
+                tagline: 'A meditative calm: sage green above, natural oak below.',
+                upper: 'Sage Green', upperHex: '#6C8C74',
+                lower: 'Natural Oak', lowerHex: '#C9A876',
+                tile: {
+                    type: 'Wood-finish (plank-style) ceramic or vitrified tile',
+                    size: '200 × 1200 mm or 150 × 900 mm planks',
+                    finish: 'Matte wood-grain, oak tone'
+                },
+                board: {
+                    type: '19mm BWP-grade plywood (carcass) + 6mm back panel',
+                    size: '2440 × 1220 mm (8 × 4 ft) standard sheet',
+                    laminate: 'Natural oak / light walnut woodgrain laminate, 0.8–1mm'
+                },
+                glass: {
+                    type: 'Clear toughened glass, sliding or hinged front',
+                    thickness: '5mm shelves, 6mm front shutter'
+                }
+            },
+            sandalwood: {
+                label: 'Sandalwood Calm',
+                tagline: 'Quiet and grounded: sandalwood ivory above, walnut brown below.',
+                upper: 'Sandalwood Ivory', upperHex: '#ECE4D3',
+                lower: 'Walnut Brown', lowerHex: '#8F7858',
+                tile: {
+                    type: 'Large-format matte ivory/cream tile',
+                    size: '600 × 600 mm or 300 × 600 mm',
+                    finish: 'Matte, low-sheen ivory'
+                },
+                board: {
+                    type: '19mm BWP-grade plywood (carcass) + 6mm back panel',
+                    size: '2440 × 1220 mm (8 × 4 ft) standard sheet',
+                    laminate: 'Walnut brown woodgrain laminate, 0.8–1mm'
+                },
+                glass: {
+                    type: 'Frosted or clear toughened glass',
+                    thickness: '5mm shelves, 6mm front shutter'
+                }
+            },
+            saffron: {
+                label: 'Saffron Dawn',
+                tagline: 'Bright and auspicious: saffron cream above, marigold below.',
+                upper: 'Saffron Cream', upperHex: '#FDEEDC',
+                lower: 'Marigold', lowerHex: '#CC7A2E',
+                tile: {
+                    type: 'Matte mustard / marigold-toned ceramic tile',
+                    size: '300 × 300 mm or 200 × 300 mm',
+                    finish: 'Matte, warm mustard-orange'
+                },
+                board: {
+                    type: '19mm BWP-grade plywood (carcass) + 6mm back panel',
+                    size: '2440 × 1220 mm (8 × 4 ft) standard sheet',
+                    laminate: 'Warm amber or honey-tone laminate, 0.8–1mm'
+                },
+                glass: {
+                    type: 'Amber-tinted or clear toughened glass',
+                    thickness: '5mm shelves, 6mm front shutter'
+                }
+            }
+        };
+
+        function setTheme(theme) {
+            const info = THEME_INFO[theme];
+            if (!info) return;
+
+            document.documentElement.setAttribute('data-theme', theme);
+
+            // Theme switcher button states
+            document.querySelectorAll('.theme-option').forEach(function (btn) {
+                const isActive = btn.getAttribute('data-theme-option') === theme;
+                btn.classList.toggle('active', isActive);
+                btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+            });
+
+            // Tagline
+            document.getElementById('themeTagline').innerHTML =
+                info.tagline + ' Ask your paint shop for <strong>' + info.upper +
+                '</strong> (upper wall) and <strong>' + info.lower + '</strong> (lower wall / panelling) shade families.';
+
+            // Render image slot + caption
+            document.querySelectorAll('.image-slot').forEach(function (slot) {
+                slot.hidden = slot.getAttribute('data-theme-image') !== theme;
+            });
+            document.getElementById('renderCaption').textContent = 'Desired North Wall Look — ' + info.label;
+
+            // Material Sourcing Specs
+            document.getElementById('specsThemeLabel').textContent = info.label;
+
+            document.getElementById('specUpperSwatch').style.backgroundColor = info.upperHex;
+            document.getElementById('specUpperName').textContent = info.upper;
+            document.getElementById('specUpperHex').textContent = info.upperHex;
+
+            document.getElementById('specLowerSwatch').style.backgroundColor = info.lowerHex;
+            document.getElementById('specLowerName').textContent = info.lower;
+            document.getElementById('specLowerHex').textContent = info.lowerHex;
+
+            document.getElementById('specTileType').textContent = info.tile.type;
+            document.getElementById('specTileSize').textContent = info.tile.size;
+            document.getElementById('specTileFinish').textContent = info.tile.finish;
+
+            document.getElementById('specBoardType').textContent = info.board.type;
+            document.getElementById('specBoardSize').textContent = info.board.size;
+            document.getElementById('specLaminate').textContent = info.board.laminate;
+
+            document.getElementById('specGlassType').textContent = info.glass.type;
+            document.getElementById('specGlassThickness').textContent = info.glass.thickness;
+        }
+
+        setTheme('bhakti');
+    </script>
+</body>
+</html>
